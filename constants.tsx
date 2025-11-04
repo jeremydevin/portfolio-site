@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { WorkExperience, Project } from './types';
+import { WorkExperience, Project, Education, Hobby } from './types';
 
 export const WORK_EXPERIENCE: WorkExperience[] = [
   {
@@ -118,3 +118,70 @@ export const PROJECTS: Project[] = [
     )
   }
 ];
+
+export const EDUCATION: Education[] = [
+  {
+    institution: 'Georgia Institute of Technology',
+    link: 'https://www.gatech.edu/',
+    startDate: 'Fall 2024',
+    endDate: 'Present',
+    degree: 'Master of Science in Computer Science',
+  },
+  {
+    institution: 'Vanderbilt University',
+    link: 'https://www.vanderbilt.edu/',
+    startDate: 'Fall 2016',
+    endDate: 'Spring 2020',
+    degree: 'Bachelor of Science in Computer Science',
+  },
+];
+
+// Helper functions for timeline
+export const parseYear = (dateStr: string): number => {
+  const yearMatch = dateStr.match(/\d{4}/);
+  return yearMatch ? parseInt(yearMatch[0]) : new Date().getFullYear();
+};
+
+export const parseStartYear = (item: WorkExperience | Education | Hobby): number => {
+  if ('startDate' in item) {
+    return parseYear(item.startDate);
+  }
+  // For WorkExperience, parse date like "Aug 2020 - Present" or "Sep 2017 - May 2020"
+  const dateMatch = item.date.match(/\d{4}/);
+  if (dateMatch) {
+    return parseInt(dateMatch[0]);
+  }
+  return 2016;
+};
+
+export const parseEndYear = (item: WorkExperience | Education | Hobby): number => {
+  if ('endDate' in item) {
+    if (item.endDate === 'Present' || item.endDate === undefined) return new Date().getFullYear();
+    return parseYear(item.endDate);
+  }
+  // For WorkExperience, parse date like "Aug 2020 - Present" or "Sep 2017 - May 2020"
+  if ('date' in item) {
+    if (item.date.includes('Present')) return new Date().getFullYear();
+    const yearMatches = item.date.match(/\d{4}/g);
+    if (yearMatches && yearMatches.length > 1) {
+      return parseInt(yearMatches[1]);
+    }
+    if (yearMatches && yearMatches.length === 1) {
+      // If only one year, assume it's the start year, so end year is same or next
+      // For internships, assume it's the same year
+      if ('internship' in item && item.internship) {
+        return parseInt(yearMatches[0]);
+      }
+      // Otherwise, if it says "Present", use current year
+      if (item.date.includes('Present')) {
+        return new Date().getFullYear();
+      }
+      return parseInt(yearMatches[0]);
+    }
+  }
+  return new Date().getFullYear();
+};
+
+export const parseEventYear = (eventDate: string): number => {
+  return parseYear(eventDate);
+};

@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { WORK_EXPERIENCE, PROJECTS } from '../constants';
 import { LinkedInIcon, DocumentIcon, ExternalLinkIcon } from './Icons';
+import Timeline from './Timeline';
 import type { WorkExperience, Project } from '../types';
 
 const Intro = () => (
@@ -68,6 +69,10 @@ const HomePage = () => {
   return (
     <>
       <Intro />
+      <section id="timeline" className="mb-16 scroll-mt-16">
+        <h2 className="text-2xl font-bold tracking-tight text-slate-200 sm:text-3xl mb-8">Timeline</h2>
+        <Timeline />
+      </section>
       <section id="experience" className="mb-16 scroll-mt-16">
         <h2 className="text-2xl font-bold tracking-tight text-slate-200 sm:text-3xl mb-8">Work Experience</h2>
         <ol className="group/list">
