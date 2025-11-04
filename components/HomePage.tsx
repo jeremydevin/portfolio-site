@@ -15,7 +15,7 @@ const Intro = () => (
         <LinkedInIcon className="w-5 h-5" />
         LinkedIn
       </a>
-      <a href="/public/resume.pdf" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2 bg-slate-800 text-cyan-400 rounded-md hover:bg-slate-700 transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-slate-900">
+      <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2 bg-slate-800 text-cyan-400 rounded-md hover:bg-slate-700 transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-slate-900">
         <DocumentIcon className="w-5 h-5" />
         Resume
       </a>

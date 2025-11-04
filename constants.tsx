@@ -48,7 +48,7 @@ export const PROJECTS: Project[] = [
     date: 'May 2025',
     summary: 'A deep learning project to train highly accurate models for lung cancer detection using a small dataset of CT scan images, surpassing a 94.38% accuracy benchmark.',
     techStack: ['Python', 'PyTorch', 'Google Colab'],
-    pdfLink: 'public/CS_7643_Final_Project_Report.pdf',
+    pdfLink: '/CS_7643_Final_Project_Report.pdf',
     content: (
       <div className="space-y-6">
         <p className="text-slate-400">
