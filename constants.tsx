@@ -123,15 +123,15 @@ export const EDUCATION: Education[] = [
   {
     institution: 'Georgia Institute of Technology',
     link: 'https://www.gatech.edu/',
-    startDate: 'Fall 2024',
+    startDate: 'Aug 2024',
     endDate: 'Present',
     degree: 'Master of Science in Computer Science',
   },
   {
     institution: 'Vanderbilt University',
     link: 'https://www.vanderbilt.edu/',
-    startDate: 'Fall 2016',
-    endDate: 'Spring 2020',
+    startDate: 'Aug 2016',
+    endDate: 'May 2020',
     degree: 'Bachelor of Science in Computer Science',
   },
 ];

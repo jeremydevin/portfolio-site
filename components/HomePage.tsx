@@ -69,10 +69,6 @@ const HomePage = () => {
   return (
     <>
       <Intro />
-      <section id="timeline" className="mb-16 scroll-mt-16">
-        <h2 className="text-2xl font-bold tracking-tight text-slate-200 sm:text-3xl mb-8">Timeline</h2>
-        <Timeline />
-      </section>
       <section id="experience" className="mb-16 scroll-mt-16">
         <h2 className="text-2xl font-bold tracking-tight text-slate-200 sm:text-3xl mb-8">Work Experience</h2>
         <ol className="group/list">
@@ -81,13 +77,17 @@ const HomePage = () => {
           ))}
         </ol>
       </section>
-      <section id="projects" className="scroll-mt-16">
+      <section id="projects" className="mb-16 scroll-mt-16">
         <h2 className="text-2xl font-bold tracking-tight text-slate-200 sm:text-3xl mb-8">Projects</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {PROJECTS.map(project => (
             <ProjectCard key={project.id} project={project} />
           ))}
         </div>
+      </section>
+      <section id="timeline" className="scroll-mt-16">
+        <h2 className="text-2xl font-bold tracking-tight text-slate-200 sm:text-3xl mb-8">Timeline</h2>
+        <Timeline />
       </section>
     </>
   );

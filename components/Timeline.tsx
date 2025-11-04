@@ -17,6 +17,7 @@ const Timeline = () => {
   const [selectedCategories, setSelectedCategories] = useState<Set<Category>>(new Set(['work', 'education']));
   const [hoveredItem, setHoveredItem] = useState<TimelineItem | null>(null);
   const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
+  const [tooltipOpacity, setTooltipOpacity] = useState(0);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
   const currentYear = new Date().getFullYear();
   const startYear = 2016;
@@ -35,6 +36,20 @@ const Timeline = () => {
     window.addEventListener('resize', checkScreenSize);
     return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
+
+  // Fade in tooltip when hoveredItem changes
+  useEffect(() => {
+    if (hoveredItem) {
+      // Start with opacity 0, then fade in after a brief delay
+      setTooltipOpacity(0);
+      const timeout = setTimeout(() => {
+        setTooltipOpacity(1);
+      }, 10);
+      return () => clearTimeout(timeout);
+    } else {
+      setTooltipOpacity(0);
+    }
+  }, [hoveredItem]);
 
   // Helper to parse date and get fractional position within year (e.g., Fall 2016 = 2016.75)
   const parseDateToFraction = (dateStr: string): number => {
@@ -382,15 +397,15 @@ const Timeline = () => {
       {/* Hover Tooltip */}
       {hoveredItem && (
         <div
-          className="fixed z-50 pointer-events-none transition-all duration-200 ease-out"
+          className="fixed z-50 pointer-events-none transition-opacity duration-120 ease-out"
           style={{
             left: `${tooltipPosition.x}px`,
             top: `${tooltipPosition.y - 140}px`,
             transform: 'translateX(-50%)',
-            opacity: hoveredItem ? 1 : 0,
+            opacity: tooltipOpacity,
           }}
         >
-          <div className="bg-slate-800/95 backdrop-blur-md border border-slate-700/50 rounded-xl p-4 shadow-2xl min-w-[280px] max-w-sm transform transition-transform duration-200 scale-100">
+          <div className="bg-slate-800/95 backdrop-blur-md border border-slate-700/50 rounded-xl p-4 shadow-2xl min-w-[280px] max-w-sm">
             {getTooltipContent(hoveredItem)}
           </div>
           <div 
