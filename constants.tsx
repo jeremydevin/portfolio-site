@@ -84,13 +84,37 @@ export const PROJECTS: Project[] = [
     )
   },
   {
-    id: 'project-2',
-    title: 'Upcoming Project',
-    date: 'Coming Soon',
-    summary: 'Details about another exciting project will be added here soon. Stay tuned for updates on new challenges and technologies explored.',
-    techStack: ['React', 'Node.js', 'GraphQL'],
+    id: 'metacognitive-mirror',
+    title: 'Metacognitive Mirror',
+    date: '',
+    summary: 'A flashcard app that tracks the gap between how confident learners think they are and how they actually perform, visualizing self-awareness over time to improve learning self-assessment.',
+    techStack: ['Next.js', 'PostgreSQL', 'Prisma', 'TypeScript'],
     content: (
-        <p>This is a placeholder for a future project. More details will be available soon!</p>
+      <div className="space-y-6">
+        <p className="text-slate-400">
+          Metacognitive Mirror is a full-stack flashcard application I built that combines spaced repetition with metacognitive tracking to help learners improve their self-awareness during study sessions. You can explore the live application at <a href="https://metacognitive-mirror.vercel.app" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline">metacognitive-mirror.vercel.app</a>.
+        </p>
+        <p>
+          The core concept addresses a common problem in learning: the disconnect between how confident we feel about our knowledge and how well we actually perform. To track this gap, users rate their confidence (on a scale of 1–5) and record their actual performance (scored as 0, 3, or 5) for each flashcard. The app's "Metacognitive Mirror" dashboard then visualizes the relationship between these two metrics over time, helping users identify patterns in their self-assessment accuracy and improve their metacognitive awareness.
+        </p>
+        <p>
+          The application uses an architecture designed for scalability and maintainability:
+        </p>
+        <ul className="list-disc list-inside space-y-2 pl-4">
+          <li>
+            <span className="font-semibold text-slate-200">Frontend:</span> Built with React and Vite for fast development and optimized builds, using React Router for navigation and Recharts for data visualization. The UI features a dark theme styled with Tailwind CSS, and Zod handles form validation for type-safe user inputs.
+          </li>
+          <li>
+            <span className="font-semibold text-slate-200">Backend:</span> Next.js API routes provide serverless endpoints for authentication, data persistence, and spaced repetition algorithm calculations. NextAuth handles secure user authentication and session management.
+          </li>
+          <li>
+            <span className="font-semibold text-slate-200">Data Layer:</span> PostgreSQL serves as the relational database, with Prisma ORM managing database queries, migrations, and type-safe database access. The spaced repetition algorithm dynamically adjusts review intervals based on both user confidence ratings and actual performance scores.
+          </li>
+        </ul>
+        <p>
+          To make the app immediately accessible, I implemented a demo mode with prepopulated cognitive science content. This allows users to explore the core features and experience the metacognitive tracking without needing to create an account, demonstrating the value proposition before signup.
+        </p>
+      </div>
     )
   }
 ];
