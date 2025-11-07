@@ -77,7 +77,7 @@ export const PROJECTS: Project[] = [
             Ultimately, several of our models successfully surpassed the benchmark. Our fine-tuned ResNet model achieved a test accuracy of 97.41%, and one of my custom-built CNNs achieved a validation accuracy of 95.19%.
           </p>
           <p className="mt-2">
-            Notably, I engineered one of my custom CNNs to be extremely efficient, reducing its size by over 96% compared to my initial design while still outperforming the benchmark. This demonstrates a promising method for deploying accurate models in resource-constrained environments, such as on a mobile device.
+            Notably, I engineered one of my custom CNNs to be extremely efficient, reducing its size by over 96% (to under 1 million parameters) compared to my initial design (~20 million parameters) while still outperforming the benchmark. This demonstrates a promising method for deploying accurate models in resource-constrained environments, such as on a mobile device.
           </p>
         </div>
       </div>
