@@ -31,7 +31,7 @@ const Timeline = () => {
     const checkScreenSize = () => {
       setIsSmallScreen(window.innerWidth < 600);
     };
-    
+
     checkScreenSize();
     window.addEventListener('resize', checkScreenSize);
     return () => window.removeEventListener('resize', checkScreenSize);
@@ -55,16 +55,16 @@ const Timeline = () => {
   const parseDateToFraction = (dateStr: string): number => {
     const yearMatch = dateStr.match(/\d{4}/);
     if (!yearMatch) return 0;
-    
+
     const year = parseInt(yearMatch[0]);
     const lowerDate = dateStr.toLowerCase();
-    
+
     // Handle seasons
     if (lowerDate.includes('fall')) return year + 0.75; // Q4 (September)
     if (lowerDate.includes('spring')) return year + 0.25; // Q1 (March)
     if (lowerDate.includes('summer')) return year + 0.5; // Q2 (June)
     if (lowerDate.includes('winter')) return year + 0.0; // Q1 (January)
-    
+
     // Handle months
     const monthMap: { [key: string]: number } = {
       'jan': 0, 'january': 0,
@@ -80,13 +80,13 @@ const Timeline = () => {
       'nov': 0.833, 'november': 0.833,
       'dec': 0.917, 'december': 0.917,
     };
-    
+
     for (const [month, fraction] of Object.entries(monthMap)) {
       if (lowerDate.includes(month)) {
         return year + fraction;
       }
     }
-    
+
     // Default to middle of year if no month/season found
     return year + 0.5;
   };
@@ -95,7 +95,7 @@ const Timeline = () => {
   const getItemDateRange = (item: TimelineItem): { start: number; end: number } => {
     let start: number;
     let end: number;
-    
+
     if (item.type === 'work') {
       const work = item.data as WorkExperience;
       const dateParts = work.date.split(' - ');
@@ -115,14 +115,14 @@ const Timeline = () => {
         end = parseDateToFraction(edu.endDate);
       }
     }
-    
+
     return { start, end };
   };
 
   // Process all timeline items
   const allTimelineItems = useMemo(() => {
     const items: TimelineItem[] = [];
-    
+
     // Add work experience items
     WORK_EXPERIENCE.forEach((work, idx) => {
       items.push({
@@ -133,7 +133,7 @@ const Timeline = () => {
         endYear: parseEndYear(work),
       });
     });
-    
+
     // Add education items
     EDUCATION.forEach((edu, idx) => {
       items.push({
@@ -144,7 +144,7 @@ const Timeline = () => {
         endYear: parseEndYear(edu),
       });
     });
-    
+
     return items;
   }, []);
 
@@ -162,7 +162,7 @@ const Timeline = () => {
 
     // Simple stacking algorithm
     const rows: TimelineItem[][] = [];
-    
+
     sortedItems.forEach(item => {
       // Find first available row
       let rowIndex = 0;
@@ -173,7 +173,7 @@ const Timeline = () => {
         if (!hasOverlap) break;
         rowIndex++;
       }
-      
+
       if (rowIndex >= rows.length) {
         rows.push([]);
       }
@@ -186,15 +186,15 @@ const Timeline = () => {
 
   const calculatePosition = (item: TimelineItem) => {
     const { start, end } = getItemDateRange(item);
-    
+
     // Calculate position based on actual dates (e.g., Fall 2016 = 2016.75)
     const startOffset = ((start - startYear) / totalYears) * 100;
-    
+
     // Calculate duration based on actual end date
     const duration = ((end - start) / totalYears) * 100;
     // Ensure minimum width
     const finalDuration = Math.max(duration, (0.5 / totalYears) * 100);
-    
+
     return { left: `${startOffset}%`, width: `${finalDuration}%` };
   };
 
@@ -241,11 +241,11 @@ const Timeline = () => {
     } else {
       // Work experience
       return {
-        dot: 'bg-cyan-500',
-        dotHover: 'bg-cyan-400',
-        line: 'from-cyan-500/40 via-cyan-500/60 to-cyan-500/40',
-        lineHover: 'from-cyan-400/60 via-cyan-400/80 to-cyan-400/60',
-        shadow: 'shadow-cyan-500/50',
+        dot: 'bg-sky-500',
+        dotHover: 'bg-sky-400',
+        line: 'from-sky-500/40 via-sky-500/60 to-sky-500/40',
+        lineHover: 'from-sky-400/60 via-sky-400/80 to-sky-400/60',
+        shadow: 'shadow-sky-500/50',
       };
     }
   };
@@ -262,9 +262,9 @@ const Timeline = () => {
       const work = item.data as WorkExperience;
       return (
         <div className="space-y-2">
-          <div className="font-semibold text-slate-100 text-base">{work.title}</div>
-          <div className="text-sm text-cyan-400">{work.company}</div>
-          <div className="text-xs text-slate-400">{work.date}</div>
+          <div className="font-semibold text-slate-900 text-base">{work.title}</div>
+          <div className="text-sm text-sky-600">{work.company}</div>
+          <div className="text-xs text-slate-500">{work.date}</div>
         </div>
       );
     } else {
@@ -272,9 +272,9 @@ const Timeline = () => {
       const edu = item.data as Education;
       return (
         <div className="space-y-2">
-          <div className="font-semibold text-slate-100 text-base">{edu.degree}</div>
-          <div className="text-sm text-amber-400">{edu.institution}</div>
-          <div className="text-xs text-slate-400">{edu.startDate} - {edu.endDate}</div>
+          <div className="font-semibold text-slate-900 text-base">{edu.degree}</div>
+          <div className="text-sm text-amber-600">{edu.institution}</div>
+          <div className="text-xs text-slate-500">{edu.startDate} - {edu.endDate}</div>
         </div>
       );
     }
@@ -291,21 +291,19 @@ const Timeline = () => {
       <div className="mb-6 flex flex-wrap gap-4">
         <button
           onClick={() => toggleCategory('work')}
-          className={`inline-flex items-center gap-2 px-4 py-2 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-slate-900 ${
-            selectedCategories.has('work')
-              ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 hover:bg-cyan-500/30'
-              : 'bg-slate-800 text-slate-400 hover:bg-slate-700 border border-slate-700'
-          }`}
+          className={`inline-flex items-center gap-2 px-4 py-2 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 focus:ring-offset-slate-50 border ${selectedCategories.has('work')
+              ? 'bg-sky-100 text-sky-700 border-sky-200 hover:bg-sky-200'
+              : 'bg-white text-slate-600 hover:bg-slate-50 border-slate-200 shadow-sm'
+            }`}
         >
           Work Experience
         </button>
         <button
           onClick={() => toggleCategory('education')}
-          className={`inline-flex items-center gap-2 px-4 py-2 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 focus:ring-offset-slate-900 ${
-            selectedCategories.has('education')
-              ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30 hover:bg-amber-500/30'
-              : 'bg-slate-800 text-slate-400 hover:bg-slate-700 border border-slate-700'
-          }`}
+          className={`inline-flex items-center gap-2 px-4 py-2 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 focus:ring-offset-slate-50 border ${selectedCategories.has('education')
+              ? 'bg-amber-100 text-amber-700 border-amber-200 hover:bg-amber-200'
+              : 'bg-white text-slate-600 hover:bg-slate-50 border-slate-200 shadow-sm'
+            }`}
         >
           Education
         </button>
@@ -315,22 +313,22 @@ const Timeline = () => {
       <div className="relative w-full overflow-hidden">
         <div className="relative w-full" style={{ height: `${timelineHeight + 110}px` }}>
           {/* Timeline Line at Bottom */}
-          <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-slate-700/50" />
-          
+          <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-slate-200" />
+
           {/* All Timeline Items Above */}
           <div className="absolute bottom-12 left-0 right-0" style={{ height: `${timelineHeight}px` }}>
             {itemsWithRows.map((item) => {
               const { left, width } = calculatePosition(item);
               const colors = getItemColor(item);
               const topOffset = (item.row || 0) * (itemHeight + rowSpacing);
-              
+
               return (
                 <div
                   key={item.id}
                   className="absolute group cursor-pointer"
-                  style={{ 
-                    left, 
-                    width, 
+                  style={{
+                    left,
+                    width,
                     top: `${topOffset}px`,
                     height: `${itemHeight}px`,
                   }}
@@ -338,14 +336,14 @@ const Timeline = () => {
                   onMouseMove={(e) => handleMouseMove(item, e)}
                   onMouseLeave={() => setHoveredItem(null)}
                 >
-                  <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[125%] w-4 h-4 rounded-full ${colors.dot} group-hover:${colors.dotHover} group-hover:scale-150 group-hover:shadow-lg group-hover:${colors.shadow} transition-all duration-300 z-10 border-2 border-slate-900`} />
+                  <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[125%] w-4 h-4 rounded-full ${colors.dot} group-hover:${colors.dotHover} group-hover:scale-150 group-hover:shadow-lg group-hover:${colors.shadow} transition-all duration-300 z-10 border-2 border-slate-50`} />
                   <div className="relative">
                     {/* Base gradient line */}
-                    <div 
+                    <div
                       className={`absolute top-1/2 left-0 right-0 h-1.5 bg-gradient-to-r ${colors.line} rounded-full -translate-y-1/2`}
                     />
                     {/* Hover overlay - transitions opacity */}
-                    <div 
+                    <div
                       className={`absolute top-1/2 left-0 right-0 h-1.5 bg-gradient-to-r ${colors.lineHover} rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 -translate-y-1/2`}
                     />
                   </div>
@@ -361,18 +359,18 @@ const Timeline = () => {
               return (
                 <div
                   key={`divider-${year}`}
-                  className="absolute bottom-0 w-0.5 h-3 bg-slate-600"
+                  className="absolute bottom-0 w-0.5 h-3 bg-slate-300"
                   style={{ left: `${dividerPosition}%` }}
                 />
               );
             })}
             {/* Add divider at the end */}
             <div
-              className="absolute bottom-0 w-0.5 h-3 bg-slate-600"
+              className="absolute bottom-0 w-0.5 h-3 bg-slate-300"
               style={{ left: '100%' }}
             />
           </div>
-          
+
           {/* Year Labels - positioned in the middle of each year segment */}
           <div className="absolute bottom-0 left-0 right-0" style={{ height: '24px' }}>
             {years.map((year) => {
@@ -405,11 +403,11 @@ const Timeline = () => {
             opacity: tooltipOpacity,
           }}
         >
-          <div className="bg-slate-800/95 backdrop-blur-md border border-slate-700/50 rounded-xl p-4 shadow-2xl min-w-[280px] max-w-sm">
+          <div className="bg-white/95 backdrop-blur-md border border-slate-200 rounded-xl p-4 shadow-xl min-w-[280px] max-w-sm">
             {getTooltipContent(hoveredItem)}
           </div>
-          <div 
-            className="absolute left-1/2 -translate-x-1/2 w-0 h-0 border-l-8 border-r-8 border-t-8 border-t-slate-800 top-full"
+          <div
+            className="absolute left-1/2 -translate-x-1/2 w-0 h-0 border-l-8 border-r-8 border-t-8 border-t-white/95 top-full"
             style={{ borderLeftColor: 'transparent', borderRightColor: 'transparent' }}
           />
         </div>
