@@ -1,19 +1,40 @@
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { PROJECTS } from '../constants';
 import { ArrowLeftIcon, ExternalLinkIcon } from './Icons';
 
+function useFadeIn() {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          el.classList.add('visible');
+          observer.unobserve(el);
+        }
+      },
+      { threshold: 0.1 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+  return ref;
+}
+
 const ProjectPage = () => {
   const { id } = useParams<{ id: string }>();
   const project = PROJECTS.find(p => p.id === id);
+  const ref = useFadeIn();
 
   if (!project) {
     return (
-      <div className="text-center">
-        <h2 className="text-2xl font-bold text-red-500">Project Not Found</h2>
-        <Link to="/" className="mt-4 inline-flex items-center gap-2 text-sky-600 hover:text-sky-500">
-          <ArrowLeftIcon className="w-5 h-5" />
+      <div className="text-center py-20">
+        <h2 className="text-2xl font-bold text-slate-800">Project Not Found</h2>
+        <Link to="/" className="mt-4 inline-flex items-center gap-2 text-sky-500 hover:text-sky-600 transition-colors">
+          <ArrowLeftIcon className="w-4 h-4" />
           Back to Home
         </Link>
       </div>
@@ -21,42 +42,57 @@ const ProjectPage = () => {
   }
 
   return (
-    <article className="space-y-8">
+    <article ref={ref} className="fade-in-up space-y-8">
+      {/* Back nav */}
       <div>
-        <Link to="/" className="group mb-8 inline-flex items-center gap-2 text-sky-600 hover:text-sky-500 transition-colors">
-          <ArrowLeftIcon className="w-5 h-5 transition-transform group-hover:-translate-x-1" />
-          Back to Home
+        <Link
+          to="/"
+          className="group inline-flex items-center gap-2 text-sm font-medium text-sky-500 hover:text-sky-600 transition-colors"
+        >
+          <ArrowLeftIcon className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
+          Home
         </Link>
       </div>
 
+      {/* Header */}
       <header>
-        <p className="text-slate-500 text-sm">{project.date}</p>
-        <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight mt-1">{project.title}</h1>
+        {project.date && <p className="text-xs font-medium text-slate-400 mb-1">{project.date}</p>}
+        <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-800 leading-tight">
+          {project.title}
+        </h1>
       </header>
 
+      {/* PDF Link */}
       {project.pdfLink && (
-        <section>
-          <a href={project.pdfLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2 bg-white text-sky-600 rounded-md hover:bg-slate-50 transition-colors focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 focus:ring-offset-slate-50 border border-slate-200 shadow-sm">
+        <div>
+          <a
+            href={project.pdfLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="glow-btn"
+          >
             Read the full project PDF
-            <ExternalLinkIcon className="w-5 h-5" />
+            <ExternalLinkIcon className="w-4 h-4" />
           </a>
-        </section>
+        </div>
       )}
 
-      <div className="prose prose-slate prose-lg max-w-none text-slate-600 prose-headings:text-slate-900 prose-a:text-sky-600 hover:prose-a:text-sky-500 prose-strong:text-slate-800">
-        {project.content}
+      {/* Content */}
+      <div className="glass-card p-6 sm:p-8">
+        <div className="prose prose-slate prose-base max-w-none text-slate-600 prose-headings:text-slate-800 prose-a:text-sky-500 hover:prose-a:text-sky-600 prose-strong:text-slate-700 leading-relaxed">
+          {project.content}
+        </div>
       </div>
 
+      {/* Tech Stack */}
       <section>
-        <h2 className="text-2xl font-bold text-slate-900 mb-4">Tech Stack</h2>
-        <div className="flex flex-wrap gap-3">
+        <h2 className="section-heading">Tech Stack</h2>
+        <div className="flex flex-wrap gap-2">
           {project.techStack.map(tech => (
-            <span key={tech} className="px-3 py-1.5 bg-sky-100 text-sky-700 text-sm font-medium rounded-full">{tech}</span>
+            <span key={tech} className="tech-badge text-sm">{tech}</span>
           ))}
         </div>
       </section>
-
-
     </article>
   );
 };

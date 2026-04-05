@@ -1,93 +1,137 @@
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { WORK_EXPERIENCE, PROJECTS } from '../constants';
-import { LinkedInIcon, DocumentIcon, ExternalLinkIcon } from './Icons';
-import Timeline from './Timeline';
+import InteractiveJourney from './Timeline';
+import { LinkedInIcon, DocumentIcon } from './Icons';
 import type { WorkExperience, Project } from '../types';
 
-const Intro = () => (
-  <header className="mb-16">
-    <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight">Jeremy Devin</h1>
-    <h2 className="mt-2 text-lg sm:text-xl font-medium text-slate-600">Software Engineer</h2>
-    <div className="mt-6 flex flex-wrap gap-4">
-      <a href="https://www.linkedin.com/in/jeremydevin/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2 bg-white text-sky-600 rounded-md hover:bg-slate-50 transition-colors focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 focus:ring-offset-slate-50 border border-slate-200 shadow-sm">
-        <LinkedInIcon className="w-5 h-5" />
-        LinkedIn
-      </a>
-      <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2 bg-white text-sky-600 rounded-md hover:bg-slate-50 transition-colors focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 focus:ring-offset-slate-50 border border-slate-200 shadow-sm">
-        <DocumentIcon className="w-5 h-5" />
-        Resume
-      </a>
-    </div>
-  </header>
-);
+/* ── Intersection Observer hook for fade-in ── */
+function useFadeIn() {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          el.classList.add('visible');
+          observer.unobserve(el);
+        }
+      },
+      { threshold: 0.12 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+  return ref;
+}
 
-const ExperienceCard: React.FC<{ item: WorkExperience }> = ({ item }) => (
-  <li className="mb-12">
-    <div className="relative grid pb-1 sm:grid-cols-8 sm:gap-8 md:gap-4">
-      <header className="z-10 mb-2 mt-1 text-xs font-semibold uppercase tracking-wide text-slate-500 sm:col-span-2">{item.date}</header>
-      <div className="z-10 sm:col-span-6">
-        <h3 className="font-medium leading-snug text-slate-900">
-          <div className="inline-flex items-baseline font-medium leading-tight text-slate-900 hover:text-sky-600 focus-visible:text-sky-600 group/link text-base">
-            <span className="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:-inset-x-6 md:-inset-y-4 lg:block"></span>
-            <span>{item.title} · <span className="inline-block">{item.company} </span></span>
-          </div>
-        </h3>
-        <ul className="mt-2 list-disc list-inside space-y-2 text-slate-600">
-          {item.description.map((point, index) => (
-            <li key={index}>{point}</li>
+/* ── Hero Section ── */
+const Hero = () => {
+  const ref = useFadeIn();
+  return (
+    <header ref={ref} className="fade-in-up mb-20 pt-8">
+      <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-none">
+        <span className="gradient-text">Jeremy Devin</span>
+      </h1>
+      <p className="mt-5 text-lg sm:text-xl text-slate-500 max-w-xl leading-relaxed">
+        Software Engineer
+      </p>
+      <div className="mt-8 flex flex-wrap gap-3">
+        <a href="https://www.linkedin.com/in/jeremydevin/" target="_blank" rel="noopener noreferrer" className="glow-btn">
+          <LinkedInIcon className="w-4 h-4" />
+          LinkedIn
+        </a>
+        <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="glow-btn">
+          <DocumentIcon className="w-4 h-4" />
+          Resume
+        </a>
+      </div>
+    </header>
+  );
+};
+
+/* ── Experience Card ── */
+const ExperienceCard: React.FC<{ item: WorkExperience; index: number }> = ({ item, index }) => {
+  const ref = useFadeIn();
+  return (
+    <div ref={ref} className="fade-in-up" style={{ transitionDelay: `${index * 80}ms` }}>
+      <div className="glass-card p-6 relative border-l-[3px] border-l-sky-400/40">
+        <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-3">
+          <h3 className="text-base font-semibold text-slate-800 leading-snug">
+            {item.title}
+            <span className="text-slate-400 font-normal"> · </span>
+            <a href={item.link} target="_blank" rel="noopener noreferrer" className="text-sky-500 hover:text-sky-600 transition-colors">
+              {item.company}
+            </a>
+          </h3>
+          <span className="text-xs font-medium text-slate-400 whitespace-nowrap">{item.date}</span>
+        </div>
+        <ul className="space-y-1.5 text-sm text-slate-500 leading-relaxed">
+          {item.description.map((point, i) => (
+            <li key={i} className="flex items-start gap-2">
+              <span className="text-sky-600 shrink-0">•</span>
+              <span>{point}</span>
+            </li>
           ))}
         </ul>
       </div>
     </div>
-  </li>
-);
+  );
+};
 
-const ProjectCard: React.FC<{ project: Project }> = ({ project }) => (
-  <Link to={`/project/${project.id}`} className="block group">
-    <div className="p-6 bg-white rounded-lg shadow-md hover:shadow-sky-500/20 transition-all duration-300 border border-slate-100 hover:border-sky-500/30 h-full flex flex-col">
-      <header>
-        <div className="flex justify-between items-baseline mb-2">
-          <h3 className="text-lg font-bold text-slate-900 group-hover:text-sky-600 transition-colors">{project.title}</h3>
-          <p className="text-sm text-slate-500">{project.date}</p>
+/* ── Project Card ── */
+const ProjectCard: React.FC<{ project: Project; index: number }> = ({ project, index }) => {
+  const ref = useFadeIn();
+  return (
+    <div ref={ref} className="fade-in-up" style={{ transitionDelay: `${index * 100}ms` }}>
+      <Link to={`/project/${project.id}`} className="block group h-full">
+        <div className="glass-card p-6 h-full flex flex-col">
+          <header className="flex justify-between items-baseline mb-3">
+            <h3 className="text-lg font-bold text-slate-800 group-hover:text-sky-500 transition-colors">{project.title}</h3>
+            {project.date && <span className="text-xs font-medium text-slate-400">{project.date}</span>}
+          </header>
+          <p className="text-sm text-slate-500 leading-relaxed flex-grow">{project.summary}</p>
+          <footer className="mt-4 flex flex-wrap gap-2">
+            {project.techStack.map(tech => (
+              <span key={tech} className="tech-badge">{tech}</span>
+            ))}
+          </footer>
         </div>
-      </header>
-      <p className="text-slate-600 flex-grow">{project.summary}</p>
-      <footer className="mt-4 flex flex-wrap gap-2">
-        {project.techStack.map(tech => (
-          <span key={tech} className="px-2 py-1 bg-sky-100 text-sky-700 text-xs font-medium rounded-full">{tech}</span>
-        ))}
-      </footer>
+      </Link>
     </div>
-  </Link>
-);
+  );
+};
 
-
+/* ── Home Page ── */
 const HomePage = () => {
   return (
     <>
-      <Intro />
-      <section id="experience" className="mb-16 scroll-mt-16">
-        <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl mb-8">Work Experience</h2>
-        <ol className="group/list">
+      <Hero />
+
+      <section id="experience" className="mb-20 scroll-mt-16">
+        <h2 className="section-heading">Experience</h2>
+        <div className="space-y-4 stagger">
           {WORK_EXPERIENCE.map((item, index) => (
-            <ExperienceCard key={index} item={item} />
-          ))}
-        </ol>
-      </section>
-      <section id="projects" className="mb-16 scroll-mt-16">
-        <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl mb-8">Projects</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {PROJECTS.map(project => (
-            <ProjectCard key={project.id} project={project} />
+            <ExperienceCard key={index} item={item} index={index} />
           ))}
         </div>
       </section>
-      <section id="timeline" className="scroll-mt-16">
-        <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl mb-8">Timeline</h2>
-        <Timeline />
+
+      <section id="projects" className="mb-20 scroll-mt-16">
+        <h2 className="section-heading">Projects</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {PROJECTS.map((project, index) => (
+            <ProjectCard key={project.id} project={project} index={index} />
+          ))}
+        </div>
       </section>
+
+      {/* <section id="journey" className="scroll-mt-16">
+        <h2 className="section-heading">Journey</h2>
+        <InteractiveJourney />
+      </section> */}
     </>
   );
 };
