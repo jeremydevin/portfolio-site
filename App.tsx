@@ -1,13 +1,25 @@
 
-import React from 'react';
-import { HashRouter, Routes, Route } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
 import HomePage from './components/HomePage';
 import ProjectPage from './components/ProjectPage';
 import TimeBankPrivacyPolicy from './components/TimeBankPrivacyPolicy';
 
+function HashRedirect() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (window.location.hash && window.location.hash.startsWith('#/')) {
+      const path = window.location.hash.replace(/^#/, '');
+      navigate(path, { replace: true });
+    }
+  }, [navigate]);
+  return null;
+}
+
 function App() {
   return (
-    <HashRouter>
+    <BrowserRouter>
+      <HashRedirect />
       <main className="min-h-screen font-sans antialiased relative">
         <div className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-12 py-16 sm:py-24">
           <Routes>
@@ -19,7 +31,7 @@ function App() {
           </Routes>
         </div>
       </main>
-    </HashRouter>
+    </BrowserRouter>
   );
 }
 
