@@ -3,6 +3,7 @@ import React from 'react';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import HomePage from './components/HomePage';
 import ProjectPage from './components/ProjectPage';
+import TimeBankPrivacyPolicy from './components/TimeBankPrivacyPolicy';
 
 function App() {
   return (
@@ -12,6 +13,9 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/project/:id" element={<ProjectPage />} />
+            <Route path="/privacy/timebank" element={<TimeBankPrivacyPolicy />} />
+            <Route path="/timebank-privacy" element={<TimeBankPrivacyPolicy />} />
+            <Route path="/privacy-policy/timebank" element={<TimeBankPrivacyPolicy />} />
           </Routes>
         </div>
       </main>
