@@ -827,7 +827,7 @@ a:hover {
   background: var(--color-bg-elevated);
   border: 1px solid var(--color-border-subtle);
   border-radius: var(--radius-xl);
-  max-width: 48rem;
+  max-width: 56rem;
   width: 100%;
   max-height: 85vh;
   overflow-y: auto;
@@ -893,12 +893,131 @@ a:hover {
 }
 
 .modal-title {
-  font-size: var(--text-3xl);
-  font-weight: 800;
-  color: var(--color-text-primary);
+  font-size: var(--text-2xl);
+  font-weight: 600;
   letter-spacing: var(--tracking-tight);
-  line-height: var(--leading-tight);
+  color: var(--color-text-title);
   margin-bottom: var(--space-6);
+}
+
+.modal-body {
+  color: var(--color-text-body);
+  display: flow-root;
+}
+
+.modal-image-container {
+  position: relative;
+  float: right;
+  width: 45%;
+  max-width: 400px;
+  border-radius: var(--radius-md);
+  margin-left: var(--space-6);
+  margin-bottom: var(--space-4);
+  border: 1px solid var(--color-border-card);
+  background: var(--color-bg-subtle);
+  overflow: hidden;
+}
+
+.modal-image-container.interactive {
+  cursor: pointer;
+}
+
+.modal-image-content {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform var(--duration-normal) var(--ease-out);
+}
+
+.modal-image-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity var(--duration-fast) ease;
+}
+
+:root[data-theme='dark'] .modal-image-overlay {
+  background: rgba(15, 23, 42, 0.45);
+}
+
+.modal-image-overlay span {
+  background: var(--color-bg-elevated);
+  color: var(--color-text-primary);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-full);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-border-subtle);
+  transform: translateY(4px);
+  transition: transform var(--duration-fast) ease;
+}
+
+.modal-image-container.interactive:hover .modal-image-overlay {
+  opacity: 1;
+}
+
+.modal-image-container.interactive:hover .modal-image-overlay span {
+  transform: translateY(0);
+}
+
+.modal-image-container.interactive:hover .modal-image-content {
+  transform: scale(1.02);
+}
+
+/* Fullscreen Image Overlay */
+.fullscreen-image-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  opacity: 0;
+  animation: fadeIn var(--duration-fast) forwards;
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+.fullscreen-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-xl);
+}
+
+.fullscreen-close {
+  position: absolute;
+  top: var(--space-6);
+  right: var(--space-6);
+  background: rgba(255,255,255,0.1);
+  color: white;
+  border: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background var(--duration-fast);
+}
+
+.fullscreen-close:hover {
+  background: rgba(255,255,255,0.2);
 }
 
 .modal-body {

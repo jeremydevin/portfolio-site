@@ -28,6 +28,11 @@ export interface Project {
   techStack: string[];
   pdfLink?: string;
   liveLink?: string;
+  liveLinkLabel?: string;
+  imageUrl?: string;
+  imageAction?: 'fullscreen' | 'link' | 'none';
+  imageLink?: string;
+  imageHoverText?: string;
 }
 
 export interface NavItem {

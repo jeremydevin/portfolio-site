@@ -1,5 +1,5 @@
 
-import React, { useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { CloseIcon, ExternalLinkIcon } from './Icons';
 import type { Project } from '../types';
 
@@ -12,6 +12,12 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
   const backdropRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
+  // Reset fullscreen state when project changes
+  useEffect(() => {
+    setIsFullscreen(false);
+  }, [project]);
 
   // Focus trap and keyboard handling
   useEffect(() => {
@@ -30,7 +36,12 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        onClose();
+        if (isFullscreen) {
+          setIsFullscreen(false);
+          e.stopPropagation();
+        } else {
+          onClose();
+        }
       }
       // Simple focus trap within modal
       if (e.key === 'Tab') {
@@ -88,21 +99,74 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
 
   if (!project) return null;
 
+  const renderImage = () => {
+    if (!project?.imageUrl) return null;
+
+    const imgElement = (
+      <img
+        src={project.imageUrl}
+        alt={`${project.title} visualization`}
+        className="modal-image-content"
+      />
+    );
+
+    const overlay = project.imageHoverText && (
+      <div className="modal-image-overlay">
+        <span>{project.imageHoverText}</span>
+      </div>
+    );
+
+    if (project.imageAction === 'fullscreen') {
+      return (
+        <button 
+          className="modal-image-container interactive" 
+          onClick={() => setIsFullscreen(true)}
+          aria-label={project.imageHoverText || "View fullscreen image"}
+        >
+          {imgElement}
+          {overlay}
+        </button>
+      );
+    }
+
+    if (project.imageAction === 'link' && project.imageLink) {
+      return (
+        <a 
+          href={project.imageLink} 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          className="modal-image-container interactive"
+        >
+          {imgElement}
+          {overlay}
+        </a>
+      );
+    }
+
+    // Default static image
+    return (
+      <div className="modal-image-container">
+        {imgElement}
+      </div>
+    );
+  };
+
   return (
-    <div
-      ref={backdropRef}
-      className="modal-backdrop"
+    <>
+    <div 
+      className={`modal-backdrop ${project ? 'open' : ''}`}
       onClick={handleBackdropClick}
+      ref={backdropRef}
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-title"
     >
       <div className="modal-content">
-        <button
-          ref={closeRef}
-          className="modal-close"
+        <button 
+          className="modal-close" 
           onClick={handleClose}
-          aria-label="Close project details"
+          aria-label="Close modal"
+          ref={closeRef}
         >
           <CloseIcon />
         </button>
@@ -111,6 +175,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
         <h2 id="modal-title" className="modal-title">{project.title}</h2>
 
         <div className="modal-body">
+          {renderImage()}
           {project.description.map((paragraph, i) => (
             <p key={i}>{paragraph}</p>
           ))}
@@ -146,7 +211,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
               rel="noopener noreferrer"
               className="glow-btn"
             >
-              View live app
+              {project.liveLinkLabel || 'View live app'}
               <ExternalLinkIcon />
             </a>
           )}
@@ -162,6 +227,25 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
         </div>
       </div>
     </div>
+    
+    {isFullscreen && project?.imageUrl && (
+      <div className="fullscreen-image-overlay" onClick={() => setIsFullscreen(false)}>
+        <button 
+          className="fullscreen-close"
+          onClick={() => setIsFullscreen(false)}
+          aria-label="Close fullscreen"
+        >
+          <CloseIcon />
+        </button>
+        <img 
+          src={project.imageUrl} 
+          alt={`${project.title} fullscreen visualization`} 
+          className="fullscreen-image" 
+          onClick={(e) => e.stopPropagation()} 
+        />
+      </div>
+    )}
+    </>
   );
 };
 
