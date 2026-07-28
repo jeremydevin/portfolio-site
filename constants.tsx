@@ -1,13 +1,27 @@
 
-import React from 'react';
-import { WorkExperience, Project, Education } from './types';
+import { WorkExperience, Project, Education, NavItem } from './types';
+
+export const NAV_ITEMS: NavItem[] = [
+  { id: 'about', label: 'About' },
+  { id: 'experience', label: 'Experience' },
+  { id: 'projects', label: 'Projects' },
+  { id: 'education', label: 'Education' },
+];
+
+export const BIO = `Software Engineer at Capital One and MS Computer Science student at Georgia Tech. I focus on building front-end platforms and developer tooling, including agentic pipelines for migrating content and pages to new platforms. At Georgia Tech, I'm taking coursework in AI/ML fundamentals, deep learning, and human-computer interaction.`;
+
+export const LINKS = {
+  linkedin: 'https://www.linkedin.com/in/jeremydevin/',
+  github: 'https://github.com/jeremydevin',
+  resume: '/resume.pdf',
+};
 
 export const WORK_EXPERIENCE: WorkExperience[] = [
   {
     company: 'Capital One',
     link: 'https://www.capitalone.com/',
-    date: 'Aug 2020 - Present',
-    title: 'Software Engineer - Enterprise Platforms',
+    date: 'Aug 2020 – Present',
+    title: 'Software Engineer — Enterprise Platforms',
     description: [
       'Built and maintained Angular components on capitalone.com, used by 80+ engineers and 200+ content managers',
       'Piloted, documented, and rolled out an AI-powered development workflow, reducing average development time by 70%',
@@ -21,8 +35,8 @@ export const WORK_EXPERIENCE: WorkExperience[] = [
   {
     company: 'Capital One',
     link: 'https://www.capitalone.com/',
-    date: 'May 2019 - Aug 2019',
-    title: 'Software Engineer Intern - Card Tech',
+    date: 'May 2019 – Aug 2019',
+    title: 'Software Engineer Intern — Card Tech',
     internship: true,
     description: [
       'Built fault-tolerant bots for internal password resets, eliminating a 20-hour/month manual process',
@@ -32,7 +46,7 @@ export const WORK_EXPERIENCE: WorkExperience[] = [
   {
     company: 'Vanderbilt University',
     link: 'https://www.vanderbilt.edu/',
-    date: 'Sep 2017 - May 2020',
+    date: 'Sep 2017 – May 2020',
     title: 'Teaching Assistant',
     description: [
       'Graded assessments and held weekly office hours for over 150 students per semester',
@@ -47,76 +61,38 @@ export const PROJECTS: Project[] = [
     title: 'OncoNet',
     date: 'Spring 2025',
     summary: 'A deep learning project to train highly accurate models for lung cancer detection using a small dataset of CT scan images, surpassing a 94.38% accuracy benchmark.',
+    description: [
+      'OncoNet is a deep learning project developed with Ajay C. and Fernando M.C. for Georgia Tech\'s CS 7643: Deep Learning course.',
+      'A major challenge in applying deep learning to medical imaging is the limited availability of large datasets. The goal was to tackle this "low-volume data" problem by training highly accurate models for lung cancer detection using a small dataset of CT scan images, aiming to surpass a recently published accuracy benchmark of 94.38%.',
+      'We implemented and compared several types of deep learning models: pre-trained CNNs fine-tuned from ImageNet (ResNet, VGG), custom CNNs designed from scratch for accuracy and computational efficiency, and Vision Transformers (ViTs) — both custom and pre-trained versions.',
+    ],
+    highlights: [
+      'Fine-tuned ResNet achieved 97.41% test accuracy, surpassing the benchmark',
+      'Custom CNN achieved 95.19% validation accuracy with under 1M parameters — a 96%+ size reduction from the initial 20M parameter design',
+      'Demonstrated that accurate models can be deployed in resource-constrained environments like mobile devices',
+    ],
     techStack: ['Python', 'PyTorch', 'Google Colab'],
     pdfLink: '/CS_7643_Final_Project_Report.pdf',
-    content: (
-      <div className="space-y-6">
-        <p className="text-slate-500">
-          OncoNet is a deep learning project I developed with Ajay C. and Fernando M.C. for the Georgia Tech class CS 7643: Deep Learning. Here's our project summary:
-        </p>
-        <p>
-          A major challenge in applying deep learning to medical imaging is the limited availability of large datasets. The goal of our project was to tackle this "low-volume data" problem by training highly accurate models for lung cancer detection using a small dataset of CT scan images. We aimed to surpass a recently published accuracy benchmark of 94.38%.
-        </p>
-        <p>
-          To find the best approach, we implemented and compared several types of deep learning models:
-        </p>
-        <ul className="list-disc list-inside space-y-2 pl-4">
-          <li>
-            <span className="font-semibold text-slate-700">Pre-trained CNNs:</span> We fine-tuned large, popular models that were pre-trained on the massive ImageNet dataset, such as ResNet and VGG, to adapt them to our specific medical imaging task.
-          </li>
-          <li>
-            <span className="font-semibold text-slate-700">Custom CNNs:</span> I personally designed, implemented, and trained a series of four custom Convolutional Neural Networks (CNNs) from scratch. My goal was to create an architecture that was both highly accurate and computationally efficient by minimizing its number of trainable parameters.
-          </li>
-          <li>
-            <span className="font-semibold text-slate-700">Vision Transformers (ViTs):</span> We also explored the performance of newer Vision Transformer architectures, training both custom ViTs and fine-tuning pre-trained versions to compare against the CNNs.
-          </li>
-        </ul>
-        <div>
-          <h3 className="text-xl font-bold text-slate-800 mb-2">Key Results</h3>
-          <p>
-            Ultimately, several of our models successfully surpassed the benchmark. Our fine-tuned ResNet model achieved a test accuracy of 97.41%, and one of my custom-built CNNs achieved a validation accuracy of 95.19%.
-          </p>
-          <p className="mt-2">
-            Notably, I engineered one of my custom CNNs to be extremely efficient, reducing its size by over 96% (to under 1 million parameters) compared to my initial design (~20 million parameters) while still outperforming the benchmark. This demonstrates a promising method for deploying accurate models in resource-constrained environments, such as on a mobile device.
-          </p>
-        </div>
-      </div>
-    )
   },
   {
     id: 'metacognitive-mirror',
     title: 'Metacognitive Mirror',
     date: 'Fall 2025',
-    summary: 'A flashcard app that tracks the gap between how confident learners think they are and how they actually perform, visualizing self-awareness over time to improve learning self-assessment.',
+    summary: 'A flashcard app that tracks the gap between how confident learners think they are and how they actually perform, visualizing self-awareness over time.',
+    description: [
+      'Metacognitive Mirror is a full-stack flashcard application that combines spaced repetition with metacognitive tracking to help learners improve their self-awareness during study sessions.',
+      'The core concept addresses a common problem in learning: the disconnect between how confident we feel about our knowledge and how well we actually perform. Users rate their confidence (1–5) and record actual performance (0, 3, or 5) for each flashcard. The "Metacognitive Mirror" dashboard visualizes the relationship between these metrics over time.',
+      'Built with a frontend using React and Vite with Recharts for data visualization, a backend with Next.js API routes and NextAuth for authentication, and a data layer using PostgreSQL with Prisma ORM for type-safe database access.',
+      'Implemented a demo mode with prepopulated cognitive science content, allowing users to explore core features without creating an account.',
+    ],
+    highlights: [
+      'Spaced repetition algorithm dynamically adjusts intervals based on both confidence ratings and performance scores',
+      'Real-time metacognitive gap visualization using Recharts',
+      'Type-safe data layer with Prisma ORM and PostgreSQL',
+    ],
     techStack: ['Next.js', 'PostgreSQL', 'Prisma', 'TypeScript'],
-    content: (
-      <div className="space-y-6">
-        <p className="text-slate-500">
-          Metacognitive Mirror is a full-stack flashcard application I built that combines spaced repetition with metacognitive tracking to help learners improve their self-awareness during study sessions. You can explore the live application at <a href="https://metacognitive-mirror.vercel.app" target="_blank" rel="noopener noreferrer" className="text-sky-500 hover:text-sky-600 underline">metacognitive-mirror.vercel.app</a>.
-        </p>
-        <p>
-          The core concept addresses a common problem in learning: the disconnect between how confident we feel about our knowledge and how well we actually perform. To track this gap, users rate their confidence (on a scale of 1–5) and record their actual performance (scored as 0, 3, or 5) for each flashcard. The app's "Metacognitive Mirror" dashboard then visualizes the relationship between these two metrics over time, helping users identify patterns in their self-assessment accuracy and improve their metacognitive awareness.
-        </p>
-        <p>
-          The application uses an architecture designed for scalability and maintainability:
-        </p>
-        <ul className="list-disc list-inside space-y-2 pl-4">
-          <li>
-            <span className="font-semibold text-slate-700">Frontend:</span> Built with React and Vite for fast development and optimized builds, using React Router for navigation and Recharts for data visualization. The UI features a dark theme styled with Tailwind CSS, and Zod handles form validation for type-safe user inputs.
-          </li>
-          <li>
-            <span className="font-semibold text-slate-700">Backend:</span> Next.js API routes provide serverless endpoints for authentication, data persistence, and spaced repetition algorithm calculations. NextAuth handles secure user authentication and session management.
-          </li>
-          <li>
-            <span className="font-semibold text-slate-700">Data Layer:</span> PostgreSQL serves as the relational database, with Prisma ORM managing database queries, migrations, and type-safe database access. The spaced repetition algorithm dynamically adjusts review intervals based on both user confidence ratings and actual performance scores.
-          </li>
-        </ul>
-        <p>
-          To make the app immediately accessible, I implemented a demo mode with prepopulated cognitive science content. This allows users to explore the core features and experience the metacognitive tracking without needing to create an account, demonstrating the value proposition before signup.
-        </p>
-      </div>
-    )
-  }
+    liveLink: 'https://metacognitive-mirror.vercel.app',
+  },
 ];
 
 export const EDUCATION: Education[] = [
@@ -135,4 +111,3 @@ export const EDUCATION: Education[] = [
     degree: 'Bachelor of Science in Computer Science',
   },
 ];
-

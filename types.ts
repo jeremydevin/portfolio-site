@@ -13,17 +13,24 @@ export interface WorkExperience {
 export interface Education {
   institution: string;
   link?: string;
-  startDate: string; // Format: "Fall 2016" or "Sep 2016"
-  endDate: string; // Format: "Spring 2020" or "Present"
+  startDate: string;
+  endDate: string;
   degree: string;
 }
 
 export interface Project {
   id: string;
-  title:string;
+  title: string;
   date: string;
   summary: string;
-  content: React.ReactNode;
+  description: string[];
+  highlights?: string[];
   techStack: string[];
   pdfLink?: string;
+  liveLink?: string;
+}
+
+export interface NavItem {
+  id: string;
+  label: string;
 }
