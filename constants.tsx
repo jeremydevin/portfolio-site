@@ -72,7 +72,7 @@ export const PROJECTS: Project[] = [
   {
     id: 'arc-agi-reasoning-agent',
     title: 'ARC-AGI Reasoning Agent',
-    date: '2024',
+    date: '2026',
     summary: 'A hybrid agent combining case-based reasoning with generate-and-test analysis to solve ARC-AGI abstract visual reasoning puzzles.',
     description: [
       'Designed and implemented a hybrid agent combining case-based reasoning with generate-and-test/means-ends analysis to solve ARC-AGI abstract visual reasoning puzzles, composing across 50 grid-transformation operators.',
@@ -84,7 +84,7 @@ export const PROJECTS: Project[] = [
   {
     id: 'onconet',
     title: 'OncoNet',
-    date: 'Spring 2025',
+    date: '2025',
     summary: 'A deep learning project to train highly accurate models for lung cancer detection using a small dataset of CT scan images, surpassing a 94.38% accuracy benchmark.',
     description: [
       'OncoNet is a deep learning project developed with Ajay C. and Fernando M.C. for Georgia Tech\'s CS 7643: Deep Learning course.',
@@ -102,7 +102,7 @@ export const PROJECTS: Project[] = [
   {
     id: 'metacognitive-mirror',
     title: 'Metacognitive Mirror',
-    date: 'Fall 2025',
+    date: '2025',
     summary: 'A flashcard app that tracks the gap between how confident learners think they are and how they actually perform, visualizing self-awareness over time.',
     description: [
       'Metacognitive Mirror is a full-stack flashcard application that combines spaced repetition with metacognitive tracking to help learners improve their self-awareness during study sessions.',
@@ -121,13 +121,14 @@ export const PROJECTS: Project[] = [
   {
     id: 'inclusion-rva',
     title: 'Inclusion RVA',
-    date: '2021',
+    date: '2023',
     summary: 'A full-stack web application with an AWS Amplify-powered self-service auth portal for search and discovery of minority-owned small businesses in Richmond, VA.',
     description: [
       'Worked with Capital One Pro Bono and West Cary Group to build a full-stack web application, with an AWS Amplify-powered self-service auth portal, for search and discovery of minority-owned small businesses in the Richmond, Virginia area.',
       'Won the Economic Impact Award, given to the Capital One Pro Bono team with the highest-valued economic contribution.',
     ],
     techStack: ['React', 'JavaScript', 'Python'],
+    liveLink: 'https://inclusionrva.com',
   },
 ];
 
