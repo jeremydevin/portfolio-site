@@ -383,7 +383,7 @@ a:hover {
    ────────────────────────────────────────────── */
 .hero {
   position: relative;
-  min-height: 100vh;
+  min-height: 100svh;
   display: flex;
   align-items: center;
   overflow: hidden;
@@ -478,11 +478,13 @@ a:hover {
   transition: all var(--duration-normal) var(--ease-out);
 }
 
-.glass-card-interactive:hover {
-  background: var(--color-bg-card-hover);
-  border-color: var(--color-border-accent);
-  box-shadow: var(--shadow-glow-blue);
-  transform: translateY(-2px);
+@media (hover: hover) and (pointer: fine) {
+  .glass-card-interactive:hover {
+    background: var(--color-bg-card-hover);
+    border-color: var(--color-border-accent);
+    box-shadow: var(--shadow-glow-blue);
+    transform: translateY(-2px);
+  }
 }
 
 /* Non-interactive cards should not transform on hover */
@@ -587,8 +589,10 @@ a:hover {
   transition: all var(--duration-normal) var(--ease-out);
 }
 
-.experience-card:hover {
-  border-left-color: var(--color-accent);
+@media (hover: hover) and (pointer: fine) {
+  .experience-card:hover {
+    border-left-color: var(--color-accent);
+  }
 }
 
 .experience-header {
@@ -617,8 +621,10 @@ a:hover {
   color: var(--color-text-accent);
   transition: color var(--duration-fast) ease;
 }
-.experience-company-link:hover {
-  color: var(--color-text-accent-hover);
+@media (hover: hover) and (pointer: fine) {
+  .experience-company-link:hover {
+    color: var(--color-text-accent-hover);
+  }
 }
 
 .experience-date {
@@ -681,15 +687,17 @@ a:hover {
   color: inherit;
 }
 
-.project-card:hover {
-  background: var(--color-bg-card-hover);
-  border-color: var(--color-border-accent);
-  box-shadow: var(--shadow-glow-blue);
-  transform: translateY(-3px);
-}
+@media (hover: hover) and (pointer: fine) {
+  .project-card:hover {
+    background: var(--color-bg-card-hover);
+    border-color: var(--color-border-accent);
+    box-shadow: var(--shadow-glow-blue);
+    transform: translateY(-3px);
+  }
 
-.project-card:hover .project-title {
-  color: var(--color-text-accent);
+  .project-card:hover .project-title {
+    color: var(--color-text-accent);
+  }
 }
 
 .project-card-header {
@@ -739,9 +747,18 @@ a:hover {
   transition: all var(--duration-normal) var(--ease-out);
 }
 
-.project-card:hover .project-card-cta {
-  opacity: 1;
-  transform: translateX(0);
+@media (hover: hover) and (pointer: fine) {
+  .project-card:hover .project-card-cta {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media (hover: none) {
+  .project-card-cta {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 /* ──────────────────────────────────────────────
@@ -770,8 +787,10 @@ a:hover {
   transition: all var(--duration-normal) var(--ease-out);
 }
 
-.education-card:hover {
-  border-left-color: var(--amber-500);
+@media (hover: hover) and (pointer: fine) {
+  .education-card:hover {
+    border-left-color: var(--amber-500);
+  }
 }
 
 .education-degree {
@@ -788,8 +807,10 @@ a:hover {
   font-weight: 500;
   transition: color var(--duration-fast) ease;
 }
-.education-institution:hover {
-  color: var(--amber-400);
+@media (hover: hover) and (pointer: fine) {
+  .education-institution:hover {
+    color: var(--amber-400);
+  }
 }
 
 .education-dates {
@@ -959,16 +980,28 @@ a:hover {
   transition: transform var(--duration-fast) ease;
 }
 
-.modal-image-container.interactive:hover .modal-image-overlay {
-  opacity: 1;
+@media (hover: hover) and (pointer: fine) {
+  .modal-image-container.interactive:hover .modal-image-overlay {
+    opacity: 1;
+  }
+
+  .modal-image-container.interactive:hover .modal-image-overlay span {
+    transform: translateY(0);
+  }
+
+  .modal-image-container.interactive:hover .modal-image-content {
+    transform: scale(1.02);
+  }
 }
 
-.modal-image-container.interactive:hover .modal-image-overlay span {
-  transform: translateY(0);
-}
+@media (hover: none) {
+  .modal-image-overlay {
+    opacity: 1;
+  }
 
-.modal-image-container.interactive:hover .modal-image-content {
-  transform: scale(1.02);
+  .modal-image-overlay span {
+    transform: translateY(0);
+  }
 }
 
 /* Fullscreen Image Overlay */
