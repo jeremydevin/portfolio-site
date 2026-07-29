@@ -128,7 +128,7 @@ const ExperienceCard: React.FC<{ item: WorkExperience; index: number }> = ({ ite
 /* ── Experience Section ── */
 const Experience = () => {
   return (
-    <section id="experience" className="section page-container">
+    <section id="experience" className="section page-container" data-nosnippet>
       <h2 className="section-heading">Experience</h2>
       <div className="experience-stack stagger">
         {WORK_EXPERIENCE.map((item, index) => (
