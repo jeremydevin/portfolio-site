@@ -102,6 +102,9 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
   const renderImage = () => {
     if (!project?.imageUrl) return null;
 
+    const containerClass = `modal-image-container ${project.imageClassName || ''}`.trim();
+    const interactiveClass = `${containerClass} interactive`;
+
     const imgElement = (
       <img
         src={project.imageUrl}
@@ -119,7 +122,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
     if (project.imageAction === 'fullscreen') {
       return (
         <button 
-          className="modal-image-container interactive" 
+          className={interactiveClass} 
           onClick={() => setIsFullscreen(true)}
           aria-label="View fullscreen image"
         >
@@ -135,7 +138,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
           href={project.imageLink} 
           target="_blank" 
           rel="noopener noreferrer" 
-          className="modal-image-container interactive"
+          className={interactiveClass}
           aria-label="Open image link"
         >
           {imgElement}
@@ -146,7 +149,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
 
     // Default static image
     return (
-      <div className="modal-image-container">
+      <div className={containerClass}>
         {imgElement}
       </div>
     );

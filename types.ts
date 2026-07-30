@@ -33,6 +33,7 @@ export interface Project {
   imageAction?: 'fullscreen' | 'link' | 'none';
   imageLink?: string;
   imageHoverText?: string;
+  imageClassName?: string;
 }
 
 export interface NavItem {

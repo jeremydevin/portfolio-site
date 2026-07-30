@@ -940,6 +940,20 @@ a:hover {
   aspect-ratio: 16 / 9;
 }
 
+.modal-image-container.vertical-image {
+  aspect-ratio: auto;
+}
+
+@media (min-width: 768px) {
+  .modal-image-container.vertical-image {
+    pointer-events: none;
+  }
+  
+  .modal-image-container.vertical-image .modal-image-action-icon {
+    display: none;
+  }
+}
+
 .modal-image-container.interactive {
   cursor: pointer;
 }

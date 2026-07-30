@@ -85,6 +85,7 @@ export const PROJECTS: Project[] = [
     liveLinkLabel: 'Visit ARC Prize Website',
     imageUrl: '/arc-architecture.png',
     imageAction: 'fullscreen',
+    imageClassName: 'vertical-image',
   },
   {
     id: 'onconet',
