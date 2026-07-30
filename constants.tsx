@@ -84,6 +84,7 @@ export const PROJECTS: Project[] = [
     liveLink: 'https://arcprize.org/',
     liveLinkLabel: 'Visit ARC Prize Website',
     imageUrl: '/arc-architecture.png',
+    imageAction: 'fullscreen',
   },
   {
     id: 'onconet',
@@ -105,7 +106,6 @@ export const PROJECTS: Project[] = [
     imageUrl: '/onconet.png',
     imageAction: 'link',
     imageLink: '/CS_7643_Final_Project_Report.pdf',
-    imageHoverText: 'Read the full report',
   },
   {
     id: 'metacognitive-mirror',
@@ -127,7 +127,6 @@ export const PROJECTS: Project[] = [
     liveLink: 'https://metacognitive-mirror.vercel.app',
     imageUrl: '/metacognitive-poster.png',
     imageAction: 'fullscreen',
-    imageHoverText: 'View project poster',
   },
   {
     id: 'inclusion-rva',
@@ -144,6 +143,7 @@ export const PROJECTS: Project[] = [
     liveLink: 'https://inclusionrva.com',
     liveLinkLabel: 'Visit Inclusion RVA',
     imageUrl: '/inclusion-rva.png',
+    imageAction: 'fullscreen',
   },
 ];
 

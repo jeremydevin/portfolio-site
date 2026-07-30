@@ -951,43 +951,30 @@ a:hover {
   transition: transform var(--duration-normal) var(--ease-out);
 }
 
-.modal-image-overlay {
+.modal-image-action-icon {
   position: absolute;
-  inset: 0;
-  background: rgba(255, 255, 255, 0.25);
-  backdrop-filter: blur(1px);
-  -webkit-backdrop-filter: blur(1px);
+  bottom: var(--space-3);
+  right: var(--space-3);
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  color: white;
+  padding: var(--space-2);
+  border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
+  pointer-events: none;
   opacity: 0;
-  transition: opacity var(--duration-fast) ease;
-}
-
-:root[data-theme='dark'] .modal-image-overlay {
-  background: rgba(15, 23, 42, 0.45);
-}
-
-.modal-image-overlay span {
-  background: var(--color-bg-elevated);
-  color: var(--color-text-primary);
-  padding: var(--space-2) var(--space-4);
-  border-radius: var(--radius-full);
-  font-size: var(--text-sm);
-  font-weight: 500;
+  transform: scale(0.95);
+  transition: opacity var(--duration-fast) ease, transform var(--duration-fast) ease;
   box-shadow: var(--shadow-sm);
-  border: 1px solid var(--color-border-subtle);
-  transform: translateY(4px);
-  transition: transform var(--duration-fast) ease;
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .modal-image-container.interactive:hover .modal-image-overlay {
+  .modal-image-container.interactive:hover .modal-image-action-icon {
     opacity: 1;
-  }
-
-  .modal-image-container.interactive:hover .modal-image-overlay span {
-    transform: translateY(0);
+    transform: scale(1);
   }
 
   .modal-image-container.interactive:hover .modal-image-content {
@@ -996,12 +983,9 @@ a:hover {
 }
 
 @media (hover: none) {
-  .modal-image-overlay {
-    opacity: 1;
-  }
-
-  .modal-image-overlay span {
-    transform: translateY(0);
+  .modal-image-action-icon {
+    opacity: 0.8;
+    transform: scale(1);
   }
 }
 

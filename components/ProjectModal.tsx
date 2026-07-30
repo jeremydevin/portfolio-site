@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { CloseIcon, ExternalLinkIcon } from './Icons';
+import { CloseIcon, ExternalLinkIcon, MaximizeIcon } from './Icons';
 import type { Project } from '../types';
 
 interface ProjectModalProps {
@@ -110,9 +110,9 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
       />
     );
 
-    const overlay = project.imageHoverText && (
-      <div className="modal-image-overlay">
-        <span>{project.imageHoverText}</span>
+    const actionIcon = (project.imageAction === 'fullscreen' || project.imageAction === 'link') && (
+      <div className="modal-image-action-icon">
+        {project.imageAction === 'fullscreen' ? <MaximizeIcon className="w-5 h-5" style={{ width: '20px', height: '20px' }} /> : <ExternalLinkIcon className="w-5 h-5" style={{ width: '20px', height: '20px' }} />}
       </div>
     );
 
@@ -121,10 +121,10 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
         <button 
           className="modal-image-container interactive" 
           onClick={() => setIsFullscreen(true)}
-          aria-label={project.imageHoverText || "View fullscreen image"}
+          aria-label="View fullscreen image"
         >
           {imgElement}
-          {overlay}
+          {actionIcon}
         </button>
       );
     }
@@ -136,9 +136,10 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
           target="_blank" 
           rel="noopener noreferrer" 
           className="modal-image-container interactive"
+          aria-label="Open image link"
         >
           {imgElement}
-          {overlay}
+          {actionIcon}
         </a>
       );
     }
