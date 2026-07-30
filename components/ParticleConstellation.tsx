@@ -24,6 +24,7 @@ const ParticleConstellation: React.FC = () => {
   const mouseRef = useRef<{ x: number; y: number; active: boolean }>({ x: 0, y: 0, active: false });
   const animationRef = useRef<number>(0);
   const reducedMotionRef = useRef(false);
+  const lastWidthRef = useRef(0);
 
   const createParticles = useCallback((width: number, height: number): Particle[] => {
     const particles: Particle[] = [];
@@ -151,13 +152,18 @@ const ParticleConstellation: React.FC = () => {
     const resize = () => {
       const dpr = window.devicePixelRatio || 1;
       const rect = canvas.getBoundingClientRect();
+      const currentWidth = window.innerWidth;
+      
       canvas.width = rect.width * dpr;
       canvas.height = rect.height * dpr;
       const ctx = canvas.getContext('2d');
       if (ctx) ctx.scale(dpr, dpr);
 
-      // Recreate particles on resize
-      particlesRef.current = createParticles(rect.width, rect.height);
+      // Recreate particles only if width significantly changed (prevents mobile scroll jump)
+      if (particlesRef.current.length === 0 || Math.abs(currentWidth - lastWidthRef.current) > 10) {
+        particlesRef.current = createParticles(rect.width, rect.height);
+        lastWidthRef.current = currentWidth;
+      }
     };
 
     resize();

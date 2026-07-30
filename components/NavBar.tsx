@@ -55,7 +55,7 @@ const NavBar: React.FC = () => {
       role="navigation"
       aria-label="Main navigation"
     >
-      <span className="nav-brand">JD</span>
+      <span className="nav-brand">Jeremy Devin</span>
       <button
         className="nav-toggle"
         onClick={() => setMobileOpen(!mobileOpen)}

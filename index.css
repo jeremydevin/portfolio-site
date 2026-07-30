@@ -935,8 +935,9 @@ a:hover {
   margin-left: var(--space-6);
   margin-bottom: var(--space-4);
   border: 1px solid var(--color-border-card);
-  background: var(--color-bg-subtle);
+  background: rgba(148, 163, 184, 0.1);
   overflow: hidden;
+  aspect-ratio: 16 / 9;
 }
 
 .modal-image-container.interactive {
